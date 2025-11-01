@@ -14,8 +14,9 @@ namespace RestaurantMenuAPI.Models.Entities
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
+        [Required]
         public Profile Profile { get; set; }
-        public Menu Menu { get; set; }
+        public Menu? Menu { get; set; }
         public State State { get; set; } 
 
     }
