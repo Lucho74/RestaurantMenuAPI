@@ -9,10 +9,11 @@ namespace RestaurantMenuAPI.Models.Entities
         public int UserId { get; set; }
         [Required]
         public string Name { get; set; }
-        public string? Imagen { get; set; }
+        public string? ImagenUrl { get; set; }
         public string? Description { get; set; }
         public string? Number { get; set; }
-        public string? Adress { get; set; }
+        public string? Address { get; set; }
+        public Menu? Menu { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }
 

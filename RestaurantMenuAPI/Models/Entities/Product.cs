@@ -12,14 +12,14 @@ namespace RestaurantMenuAPI.Models.Entities
         [Required]
         public string Name { get; set; }
         public string? Description { get; set; }
-        public string? Image { get; set; }
+        public string? ImageUrl { get; set; }
         [Required]
         public Category Category { get; set; }
         public SpecialCategory SpecialCategory { get; set; }
         public bool IsFeatured { get; set; }
+        public int MenuId { get; set; }
         [ForeignKey("MenuId")]
         public Menu Menu{ get; set; }
-        public int MenuId { get; set; }
 
     }
 }

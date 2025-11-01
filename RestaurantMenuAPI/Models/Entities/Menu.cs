@@ -6,10 +6,10 @@ namespace RestaurantMenuAPI.Models.Entities
     public class Menu
     {
         [Key]
-        public int UserId { get; set; }
+        public int ProfileId { get; set; }
         public ICollection<Product>? Products { get; set; }
 
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        [ForeignKey("ProfileId")]
+        public Profile Profile { get; set; }
     }
 }
