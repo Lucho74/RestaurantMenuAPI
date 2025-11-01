@@ -16,6 +16,7 @@ namespace RestaurantMenuAPI.Models.Entities
         [Required]
         public Category Category { get; set; }
         public SpecialCategory SpecialCategory { get; set; }
+        public bool IsFeatured { get; set; }
         [ForeignKey("MenuId")]
         public Menu Menu { get; set; }
         public int MenuId { get; set; }
