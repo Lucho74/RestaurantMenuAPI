@@ -1,5 +1,4 @@
-﻿using RestaurantMenuAPI.Models.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestaurantMenuAPI.Models.Entities
@@ -15,13 +14,8 @@ namespace RestaurantMenuAPI.Models.Entities
         public decimal Price { get; set; }
         public string? Description { get; set; }
         public string? ImageUrl { get; set; }
-        [Required]
-        public Category Category { get; set; }
-        public SpecialCategory SpecialCategory { get; set; }
-        public bool IsFeatured { get; set; } = false;
-        public int MenuId { get; set; }
-        [ForeignKey("MenuId")]
-        public Menu Menu{ get; set; }
+
+        public ICollection<Category> Categories = new List<Category>();
 
     }
 }

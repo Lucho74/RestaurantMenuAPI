@@ -5,10 +5,10 @@ using RestaurantMenuAPI.Repositories.Interfaces;
 
 namespace RestaurantMenuAPI.Repositories.Implementations
 {
-    public class UserRepository : IUserRepository
+    public class RestaurantRepository : IRestaurantRepository
     {
         private readonly RestaurantMenuContext _context;
-        public UserRepository(RestaurantMenuContext context)
+        public RestaurantRepository(RestaurantMenuContext context)
         {
             _context = context;
         }

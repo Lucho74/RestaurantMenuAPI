@@ -20,7 +20,7 @@ builder.Services.AddDbContext < RestaurantMenuContext > (
     ));
 
 #region inject dependencies
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserRepository, RestaurantRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 #endregion
 
