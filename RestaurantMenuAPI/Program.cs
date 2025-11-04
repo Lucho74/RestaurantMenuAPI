@@ -1,5 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using RestaurantMenuAPI.Data;
+using RestaurantMenuAPI.Repositories.Implementations;
+using RestaurantMenuAPI.Repositories.Interfaces;
+using RestaurantMenuAPI.Services.Implementations;
+using RestaurantMenuAPI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +18,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext < RestaurantMenuContext > (
     dbContextOptions => dbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:RestaurantMenuDBConnectionString"]
     ));
+
+#region inject dependencies
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+#endregion
 
 var app = builder.Build();
 
