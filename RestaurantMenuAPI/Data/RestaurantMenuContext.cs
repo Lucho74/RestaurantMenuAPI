@@ -36,6 +36,7 @@ namespace RestaurantMenuAPI.Data
                 Id = 1,
                 MenuId = 1,
                 Name = "PrimerProducto",
+                Price = 100,
                 Category = Category.PlatosPrincipales,
             };
 
