@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantMenuAPI.Data;
 
@@ -10,9 +11,11 @@ using RestaurantMenuAPI.Data;
 namespace RestaurantMenuAPI.Migrations
 {
     [DbContext(typeof(RestaurantMenuContext))]
-    partial class RestaurantMenuContextModelSnapshot : ModelSnapshot
+    [Migration("20251109053443_AddHappyHourTable")]
+    partial class AddHappyHourTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.9");
@@ -59,7 +62,7 @@ namespace RestaurantMenuAPI.Migrations
                     b.Property<int>("RestaurantId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("DiscountPercentage")
+                    b.Property<int>("DiscountPercent")
                         .HasColumnType("INTEGER");
 
                     b.Property<TimeSpan>("EndTime")
@@ -74,16 +77,6 @@ namespace RestaurantMenuAPI.Migrations
                     b.HasKey("RestaurantId");
 
                     b.ToTable("HappyHours");
-
-                    b.HasData(
-                        new
-                        {
-                            RestaurantId = 1,
-                            DiscountPercentage = 50,
-                            EndTime = new TimeSpan(0, 20, 0, 0, 0),
-                            IsActive = true,
-                            StartTime = new TimeSpan(0, 18, 0, 0, 0)
-                        });
                 });
 
             modelBuilder.Entity("RestaurantMenuAPI.Models.Entities.Product", b =>
@@ -98,10 +91,16 @@ namespace RestaurantMenuAPI.Migrations
                     b.Property<DateTime?>("DiscountEnd")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("DiscountPercentage")
+                    b.Property<int?>("DiscountPercent")
                         .HasColumnType("INTEGER");
 
+                    b.Property<decimal?>("DiscountPrice")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime?>("DiscountStart")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal?>("HappyHourPrice")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("HasDiscount")
@@ -112,9 +111,6 @@ namespace RestaurantMenuAPI.Migrations
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsFeatured")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -138,7 +134,6 @@ namespace RestaurantMenuAPI.Migrations
                             Id = 1,
                             HasDiscount = false,
                             HasHappyHour = false,
-                            IsFeatured = false,
                             Name = "Hamburguesa Simple",
                             Price = 1000m,
                             RestaurantId = 1
@@ -148,7 +143,6 @@ namespace RestaurantMenuAPI.Migrations
                             Id = 2,
                             HasDiscount = false,
                             HasHappyHour = false,
-                            IsFeatured = false,
                             Name = "Hamburguesa Doble",
                             Price = 2000m,
                             RestaurantId = 1
@@ -158,7 +152,6 @@ namespace RestaurantMenuAPI.Migrations
                             Id = 3,
                             HasDiscount = false,
                             HasHappyHour = false,
-                            IsFeatured = false,
                             Name = "Mozzarella",
                             Price = 1500m,
                             RestaurantId = 1
@@ -168,7 +161,6 @@ namespace RestaurantMenuAPI.Migrations
                             Id = 4,
                             HasDiscount = false,
                             HasHappyHour = false,
-                            IsFeatured = false,
                             Name = "Especial",
                             Price = 2500m,
                             RestaurantId = 1
@@ -221,9 +213,6 @@ namespace RestaurantMenuAPI.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("ClosingTime")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
@@ -241,13 +230,6 @@ namespace RestaurantMenuAPI.Migrations
                     b.Property<string>("Number")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("OpeningDays")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<TimeSpan>("OpeningTime")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -263,11 +245,8 @@ namespace RestaurantMenuAPI.Migrations
                         new
                         {
                             Id = 1,
-                            ClosingTime = new TimeSpan(0, 0, 0, 0, 0),
-                            Email = "a@mail.com",
+                            Email = "a@gmail.com",
                             Name = "PrimerRestaurante",
-                            OpeningDays = "1,2,3,4,5,6",
-                            OpeningTime = new TimeSpan(0, 8, 0, 0, 0),
                             Password = "a",
                             State = 0
                         });

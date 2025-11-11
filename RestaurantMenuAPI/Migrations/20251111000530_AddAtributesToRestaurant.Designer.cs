@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantMenuAPI.Data;
 
@@ -10,9 +11,11 @@ using RestaurantMenuAPI.Data;
 namespace RestaurantMenuAPI.Migrations
 {
     [DbContext(typeof(RestaurantMenuContext))]
-    partial class RestaurantMenuContextModelSnapshot : ModelSnapshot
+    [Migration("20251111000530_AddAtributesToRestaurant")]
+    partial class AddAtributesToRestaurant
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.9");
@@ -74,16 +77,6 @@ namespace RestaurantMenuAPI.Migrations
                     b.HasKey("RestaurantId");
 
                     b.ToTable("HappyHours");
-
-                    b.HasData(
-                        new
-                        {
-                            RestaurantId = 1,
-                            DiscountPercentage = 50,
-                            EndTime = new TimeSpan(0, 20, 0, 0, 0),
-                            IsActive = true,
-                            StartTime = new TimeSpan(0, 18, 0, 0, 0)
-                        });
                 });
 
             modelBuilder.Entity("RestaurantMenuAPI.Models.Entities.Product", b =>
@@ -100,6 +93,9 @@ namespace RestaurantMenuAPI.Migrations
 
                     b.Property<int?>("DiscountPercentage")
                         .HasColumnType("INTEGER");
+
+                    b.Property<decimal?>("DiscountPrice")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("DiscountStart")
                         .HasColumnType("TEXT");
@@ -264,7 +260,7 @@ namespace RestaurantMenuAPI.Migrations
                         {
                             Id = 1,
                             ClosingTime = new TimeSpan(0, 0, 0, 0, 0),
-                            Email = "a@mail.com",
+                            Email = "a@gmail.com",
                             Name = "PrimerRestaurante",
                             OpeningDays = "1,2,3,4,5,6",
                             OpeningTime = new TimeSpan(0, 8, 0, 0, 0),

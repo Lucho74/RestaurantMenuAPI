@@ -1,4 +1,5 @@
 ﻿using RestaurantMenuAPI.Data;
+using RestaurantMenuAPI.Models.DTOs;
 using RestaurantMenuAPI.Models.Entities;
 using RestaurantMenuAPI.Models.Enums;
 using RestaurantMenuAPI.Repositories.Interfaces;
@@ -13,57 +14,75 @@ namespace RestaurantMenuAPI.Repositories.Implementations
             _context = context;
         }
 
-        public bool CheckIfExists(int userId)
+        public bool CheckIfExists(int restId)
         {
-            return _context.Users.Any(u => u.Id == userId);
+            return _context.Restaurants.Any(r => r.Id == restId);
         }
 
-
-        public int Create(User newUser)
+        public int Create(Restaurant newRest)
         {
-            User createdUser = _context.Users.Add(newUser).Entity;
+            Restaurant createdRest = _context.Restaurants.Add(newRest).Entity;
             _context.SaveChanges();
-            return createdUser.Id;
+            return createdRest.Id;
         }
 
-        public void Disable(User user)
+        public void Disable(Restaurant rest)
         {
-            user.State = State.Inactive;
+            rest.State = State.Inactive;
             _context.SaveChanges();
         }
 
-        public List<User> GetAll()
+        public List<Restaurant> GetAll()
         {
-            return _context.Users.Where(u => u.State == State.Active).ToList();
+            return _context.Restaurants.Where(r => r.State == State.Active).ToList();
         }
 
-        public User? GetById(int userId)
+        public Restaurant? GetById(int restId)
         {
-            User user = _context.Users.SingleOrDefault(u => u.Id == userId);
-            if (user == null || user.State == State.Inactive) {
+            Restaurant? rest = _context.Restaurants.Find(restId);
+            if (rest == null || rest.State == State.Inactive)
+            {
                 return null;
             }
-            return user;
+            return rest;
         }
 
-        public void Remove(int userId)
+        public void Remove(int restId)
         {
-            var user = _context.Users.SingleOrDefault(u => u.Id == userId);
-            if (user == null)
+            Restaurant? rest = GetById(restId);
+            if (rest == null)
             {
-                throw new Exception("El usuario no existe");
+                throw new Exception("El restaurante no existe");
             }
-            Disable(user);
+            Disable(rest);
         }
 
-        public void Update(User updatedUser, int userId)
+        public void Update(Restaurant updatedRest, int restId)
         {
-            throw new NotImplementedException();
+            Restaurant? rest = GetById(restId);
+            if (rest == null)
+            {
+                throw new Exception("El restaurante no existe");
+            }
+            rest.Name = updatedRest.Name;
+            rest.Description = updatedRest.Description;
+            rest.ImageUrl = updatedRest.ImageUrl;
+            rest.Number = updatedRest.Number;
+            rest.Address = updatedRest.Address;
+            rest.OpeningTime = updatedRest.OpeningTime;
+            rest.ClosingTime = updatedRest.ClosingTime;
+            rest.OpeningDays = updatedRest.OpeningDays;
+            int modifiedCount = _context.SaveChanges();
+            if (modifiedCount == 0)
+            {
+                throw new Exception("No se pudo actualizar el restaurante. No se detectó ningún cambio.");
+            }
+
         }
 
-        public User? Validate(string email, string password)
+        public Restaurant? Validate(AuthDto dto)
         {
-            return _context.Users.SingleOrDefault(u => u.Email == email && u.Password == password);
+            return _context.Restaurants.FirstOrDefault(p => p.Email == dto.Email && p.Password == dto.Password);
         }
     }
 }
