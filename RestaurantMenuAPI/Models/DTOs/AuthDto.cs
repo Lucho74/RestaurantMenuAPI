@@ -1,7 +1,6 @@
 ﻿namespace RestaurantMenuAPI.Models.DTOs
 {
-    public record CreateAndUpdateUserDto
-        (
+    public record AuthDto(
         string Email,
         string Password
         );

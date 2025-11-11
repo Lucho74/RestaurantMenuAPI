@@ -1,10 +1,9 @@
-﻿using RestaurantMenuAPI.Models.Enums;
-
-namespace RestaurantMenuAPI.Models.DTOs
+﻿namespace RestaurantMenuAPI.Models.DTOs
 {
-    public record RestaurantDto(
-        int Id,
+    public record CreateRestaurantDto
+        (
         string Email,
+        string Password,
         string Name,
         string? ImageUrl,
         string? Description,
@@ -12,10 +11,6 @@ namespace RestaurantMenuAPI.Models.DTOs
         string? Address,
         TimeSpan OpeningTime,
         TimeSpan ClosingTime,
-        string OpeningDays,
-        bool IsOpen,
-        State State
-
-
+        string OpeningDays
         );
 }
