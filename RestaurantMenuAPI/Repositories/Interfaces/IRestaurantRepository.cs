@@ -12,6 +12,6 @@ namespace RestaurantMenuAPI.Repositories.Interfaces
         void Remove(int restId);
         void Update(Restaurant updatedRest, int restId);
         void Disable(Restaurant rest);
-        Restaurant? Validate(AuthDto dto);
+        Restaurant? Validate(string email);
     }
 }

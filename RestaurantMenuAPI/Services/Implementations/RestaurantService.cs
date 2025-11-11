@@ -1,8 +1,10 @@
-﻿using RestaurantMenuAPI.Models.DTOs;
+﻿using Microsoft.AspNetCore.Identity;
+using RestaurantMenuAPI.Models.DTOs;
 using RestaurantMenuAPI.Models.Entities;
 using RestaurantMenuAPI.Models.Enums;
 using RestaurantMenuAPI.Repositories.Interfaces;
 using RestaurantMenuAPI.Services.Interfaces;
+using static BCrypt.Net.BCrypt;
 
 namespace RestaurantMenuAPI.Services.Implementations
 {
@@ -21,10 +23,11 @@ namespace RestaurantMenuAPI.Services.Implementations
 
         public RestaurantDto Create(CreateRestaurantDto dto)
         {
+            string passwordHash = HashPassword(dto.Password);
             Restaurant newRest = new Restaurant()
             {
                 Email = dto.Email,
-                Password = dto.Password,
+                Password = passwordHash,
                 Name = dto.Name,
                 Description = dto.Description,
                 ImageUrl = dto.ImageUrl,
@@ -132,10 +135,14 @@ namespace RestaurantMenuAPI.Services.Implementations
         public Restaurant? Validate(AuthDto dto)
         {
             Restaurant? result = null;
-
+        
             if (!string.IsNullOrEmpty(dto.Email) && !string.IsNullOrEmpty(dto.Password))
-                result = _restaurantRepository.Validate(dto);
-            return result;
+                result = _restaurantRepository.Validate(dto.Email);
+
+            if (Verify(dto.Password, result.Password))
+                return result;
+
+            return null;
         }
 
     }

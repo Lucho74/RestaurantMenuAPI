@@ -16,6 +16,10 @@ namespace RestaurantMenuAPI.Data
         public DbSet<HappyHour> HappyHours { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Restaurant>(entity =>
+            {
+                entity.HasIndex(r => r.Email).IsUnique();
+            });
             modelBuilder.Entity<ProductCategory>(entity =>
             {
                 entity.HasKey(pc => new { pc.ProductId, pc.CategoryId });
@@ -29,6 +33,7 @@ namespace RestaurantMenuAPI.Data
                       .WithMany(c => c.ProductCategories)
                       .HasForeignKey(pc => pc.CategoryId)
                       .OnDelete(DeleteBehavior.Cascade);
+
             });
             Restaurant restaurant = new Restaurant()
             {   

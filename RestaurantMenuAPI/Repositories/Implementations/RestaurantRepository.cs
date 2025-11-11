@@ -80,9 +80,9 @@ namespace RestaurantMenuAPI.Repositories.Implementations
 
         }
 
-        public Restaurant? Validate(AuthDto dto)
+        public Restaurant? Validate(string email)
         {
-            return _context.Restaurants.FirstOrDefault(p => p.Email == dto.Email && p.Password == dto.Password);
+            return _context.Restaurants.FirstOrDefault(p => p.Email == email);
         }
     }
 }
