@@ -14,8 +14,17 @@ namespace RestaurantMenuAPI.Models.Entities
         public decimal Price { get; set; }
         public string? Description { get; set; }
         public string? ImageUrl { get; set; }
+        public bool IsFeatured { get; set; } = false;
+        public bool HasDiscount { get; set; } = false;
+        public int? DiscountPercentage { get; set; }
+        public DateTime? DiscountStart { get; set; }
+        public DateTime? DiscountEnd { get; set; }
+        public bool HasHappyHour { get; set; } = false;
+        public int RestaurantId { get; set; }
 
-        public ICollection<Category> Categories = new List<Category>();
+        public ICollection<ProductCategory> ProductCategories = new List<ProductCategory>();
 
+        [ForeignKey("RestaurantId")]
+        public Restaurant Restaurant { get; set; }
     }
 }

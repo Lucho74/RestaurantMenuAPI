@@ -20,8 +20,18 @@ namespace RestaurantMenuAPI.Models.Entities
         public string? Description { get; set; }
         public string? Number { get; set; }
         public string? Address { get; set; }
-        public ICollection<Category>? Categories { get; set; }
+        [Required]
+        public TimeSpan OpeningTime { get; set; }
+        [Required]
+        public TimeSpan ClosingTime { get; set; }
+        [Required]
+        public string OpeningDays { get; set; }
+        public ICollection<Category>? Categories { get; set; } = new List<Category>();
+        public ICollection<Product>? Products { get; set; } = new List<Product>();
+        public HappyHour? happyHour { get; set; }
         public State State { get; set; } 
+
+
 
     }
 }
