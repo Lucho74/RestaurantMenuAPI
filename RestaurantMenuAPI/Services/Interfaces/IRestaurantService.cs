@@ -13,6 +13,7 @@ namespace RestaurantMenuAPI.Services.Interfaces
         void Remove(int restId);
         void Update(UpdateRestaurantDto dto, int restId);
         bool IsOpen(TimeSpan openingTime, TimeSpan closingTime, string openingDays);
+        void RegisterVisit(int restId);
 
     }
 }

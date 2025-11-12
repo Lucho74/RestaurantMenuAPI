@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using RestaurantMenuAPI.Models.DTOs;
+﻿using RestaurantMenuAPI.Models.DTOs;
 using RestaurantMenuAPI.Models.Entities;
 using RestaurantMenuAPI.Models.Enums;
 using RestaurantMenuAPI.Repositories.Interfaces;
@@ -27,7 +26,7 @@ namespace RestaurantMenuAPI.Services.Implementations
             Restaurant newRest = new Restaurant()
             {
                 Email = dto.Email,
-                Password = passwordHash,
+                PasswordHash = passwordHash,
                 Name = dto.Name,
                 Description = dto.Description,
                 ImageUrl = dto.ImageUrl,
@@ -49,6 +48,7 @@ namespace RestaurantMenuAPI.Services.Implementations
                 createdRest.ImageUrl,
                 createdRest.Number,
                 createdRest.Address,
+                createdRest.Views,
                 createdRest.OpeningTime,
                 createdRest.ClosingTime,
                 createdRest.OpeningDays,
@@ -68,6 +68,7 @@ namespace RestaurantMenuAPI.Services.Implementations
                 r.ImageUrl,
                 r.Number,
                 r.Address,
+                r.Views,
                 r.OpeningTime,
                 r.ClosingTime,
                 r.OpeningDays,
@@ -92,6 +93,7 @@ namespace RestaurantMenuAPI.Services.Implementations
                 rest.ImageUrl,
                 rest.Number,
                 rest.Address,
+                rest.Views,
                 rest.OpeningTime,
                 rest.ClosingTime,
                 rest.OpeningDays,
@@ -104,11 +106,16 @@ namespace RestaurantMenuAPI.Services.Implementations
         {
             var now = DateTime.Now.TimeOfDay;
             var today = (int)DateTime.Now.DayOfWeek;
-            var todayAdjusted = today == 0 ? 7 : today; // Domingo = 7
+            var todayAdjusted = today == 0 ? 7 : today;
 
             return openingDays.Contains(todayAdjusted.ToString()) &&
                    now >= openingTime &&
                    now <= closingTime;
+        }
+
+        public void RegisterVisit(int restId)
+        {
+            _restaurantRepository.RegisterVisit(restId);
         }
 
         public void Remove(int restId)
@@ -139,10 +146,10 @@ namespace RestaurantMenuAPI.Services.Implementations
             if (!string.IsNullOrEmpty(dto.Email) && !string.IsNullOrEmpty(dto.Password))
                 result = _restaurantRepository.Validate(dto.Email);
 
-            if (Verify(dto.Password, result.Password))
+            if (result is not null && Verify(dto.Password, result.PasswordHash))
                 return result;
 
-            return null;
+            return result;
         }
 
     }

@@ -33,24 +33,24 @@ namespace RestaurantMenuAPI.Controllers
         }
 
         [HttpGet("category/{categoryId}")]
-        public ActionResult<ProductDto> GetAllByCategory(int categoryId)
+        [AllowAnonymous]
+        public ActionResult<ProductDto> GetAllByCategory(int categoryId, int restId)
         {
-            int restId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("id"))!.Value);
             return Ok(_productService.GetAllByCategory(categoryId, restId));
         }
 
         [HttpGet]
-        public ActionResult<ProductDto> GetAllByRestaurant()
+        [AllowAnonymous]
+        public ActionResult<ProductDto> GetAllByRestaurant(int restId)
         {
-            int restId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("id"))!.Value);
             return Ok(_productService.GetAllByRestaurant(restId));
         }
 
 
         [HttpGet("{productId}")]
-        public IActionResult GetOneById(int productId)
+        [AllowAnonymous]
+        public IActionResult GetOneById(int productId, int restId)
         {
-            int restId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("id"))!.Value);
             if (productId == 0)
             {
                 return BadRequest("El ID ingresado debe ser distinto de 0");

@@ -47,6 +47,21 @@ namespace RestaurantMenuAPI.Repositories.Implementations
             return rest;
         }
 
+        public void RegisterVisit(int restId)
+        {
+            Restaurant? rest = GetById(restId);
+            if (rest == null)
+            {
+                throw new Exception("El restaurante no existe");
+            }
+            rest.Views += 1;
+            int modifiedCount = _context.SaveChanges();
+            if (modifiedCount == 0)
+            {
+                throw new Exception("No se registro la visita");
+            }
+        }
+
         public void Remove(int restId)
         {
             Restaurant? rest = GetById(restId);

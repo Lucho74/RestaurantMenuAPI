@@ -10,6 +10,7 @@ namespace RestaurantMenuAPI.Models.DTOs
         string? Description,
         string? Number,
         string? Address,
+        int Views,
         TimeSpan OpeningTime,
         TimeSpan ClosingTime,
         string OpeningDays,

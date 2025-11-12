@@ -13,13 +13,14 @@ namespace RestaurantMenuAPI.Models.Entities
         [EmailAddress]
         public string Email { get; set; }
         [Required]
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
         [Required]
         public string Name { get; set; }
         public string? ImageUrl { get; set; }
         public string? Description { get; set; }
         public string? Number { get; set; }
         public string? Address { get; set; }
+        public int Views { get; set; } = 0;
         [Required]
         public TimeSpan OpeningTime { get; set; }
         [Required]

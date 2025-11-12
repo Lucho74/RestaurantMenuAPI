@@ -35,19 +35,21 @@ namespace RestaurantMenuAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ProductDto> GetAllByRestaurant()
+        [AllowAnonymous]
+        public ActionResult<ProductDto> GetAllByRestaurant(int restId)
         {
-            int restId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("id"))!.Value);
             return Ok(_categoryService.GetAllByRestaurant(restId));
         }
 
         [HttpGet("product/{productId}")]
+        [AllowAnonymous]
         public ActionResult<ProductDto> GetAllByProduct(int productId)
         {
             return Ok(_categoryService.GetAllByProduct(productId));
         }
 
         [HttpGet("{categoryid}")]
+        [AllowAnonymous]
         public IActionResult GetOneById(int id)
         {
             if (id == 0)

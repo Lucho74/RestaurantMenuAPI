@@ -13,5 +13,6 @@ namespace RestaurantMenuAPI.Repositories.Interfaces
         void Update(Restaurant updatedRest, int restId);
         void Disable(Restaurant rest);
         Restaurant? Validate(string email);
+        void RegisterVisit(int restId);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantMenuAPI.Models.DTOs;
 using RestaurantMenuAPI.Services.Interfaces;
@@ -33,12 +34,14 @@ namespace RestaurantMenuAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult<RestaurantDto> GetAll()
         {
             return Ok(_restaurantService.GetAll());
         }
 
         [HttpGet("{restId}")]
+        [AllowAnonymous]
         public IActionResult GetOneById(int restId)
         {
             if (restId == 0)
@@ -76,6 +79,15 @@ namespace RestaurantMenuAPI.Controllers
             }
             return NoContent();
         }
+
+        [HttpPut("{restId}/visit")]
+        [AllowAnonymous]
+        public IActionResult RegisterVisit(int restId)
+        {
+            _restaurantService.RegisterVisit(restId);
+            return NoContent();
+        }
+
 
         [HttpGet]
         [Route("me")]

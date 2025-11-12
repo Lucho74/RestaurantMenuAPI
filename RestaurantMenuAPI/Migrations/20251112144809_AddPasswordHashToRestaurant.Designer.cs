@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantMenuAPI.Data;
 
@@ -10,9 +11,11 @@ using RestaurantMenuAPI.Data;
 namespace RestaurantMenuAPI.Migrations
 {
     [DbContext(typeof(RestaurantMenuContext))]
-    partial class RestaurantMenuContextModelSnapshot : ModelSnapshot
+    [Migration("20251112144809_AddPasswordHashToRestaurant")]
+    partial class AddPasswordHashToRestaurant
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.9");
@@ -255,9 +258,6 @@ namespace RestaurantMenuAPI.Migrations
                     b.Property<int>("State")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Views")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
@@ -275,8 +275,7 @@ namespace RestaurantMenuAPI.Migrations
                             OpeningDays = "1,2,3,4,5,6",
                             OpeningTime = new TimeSpan(0, 8, 0, 0, 0),
                             PasswordHash = "a",
-                            State = 0,
-                            Views = 0
+                            State = 0
                         });
                 });
 
