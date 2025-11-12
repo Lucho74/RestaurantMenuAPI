@@ -39,7 +39,7 @@ namespace RestaurantMenuAPI.Data
             {   
                 Id = 1,
                 Email = "a@mail.com",
-                Password = "a",
+                PasswordHash = "a",
                 Name = "PrimerRestaurante",
                 OpeningTime = TimeSpan.Parse("8:00:00"),
                 ClosingTime = TimeSpan.Parse("00:00:00"),
