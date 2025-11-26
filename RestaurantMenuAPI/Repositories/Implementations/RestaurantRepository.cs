@@ -32,6 +32,7 @@ namespace RestaurantMenuAPI.Repositories.Implementations
             _context.SaveChanges();
         }
 
+
         public List<Restaurant> GetAll()
         {
             return _context.Restaurants.Where(r => r.State == State.Active).ToList();
@@ -80,8 +81,8 @@ namespace RestaurantMenuAPI.Repositories.Implementations
                 throw new Exception("El restaurante no existe");
             }
             rest.Name = updatedRest.Name;
-            rest.Description = updatedRest.Description;
             rest.ImageUrl = updatedRest.ImageUrl;
+            rest.Description = updatedRest.Description;
             rest.Number = updatedRest.Number;
             rest.Address = updatedRest.Address;
             rest.OpeningTime = updatedRest.OpeningTime;

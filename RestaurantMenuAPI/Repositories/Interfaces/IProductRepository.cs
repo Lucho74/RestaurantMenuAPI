@@ -1,4 +1,5 @@
-﻿using RestaurantMenuAPI.Models.Entities;
+﻿using Microsoft.CodeAnalysis;
+using RestaurantMenuAPI.Models.Entities;
 
 namespace RestaurantMenuAPI.Repositories.Interfaces
 {
@@ -11,6 +12,7 @@ namespace RestaurantMenuAPI.Repositories.Interfaces
         void Remove(int productId);
         void Update(Product updatedProduct, int productId);
         void AddCategoryToProduct(int productId, int categoryId);
+        void DeleteCategoryFromProduct(int productId, int categoryId);
         void ApplyDiscount(Product productWithDiscount, int productId);
         void UpdateOnlyPrice(decimal newPrice, int productId);
 

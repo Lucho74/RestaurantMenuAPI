@@ -3,7 +3,7 @@
     public record ProductWithCategoriesDto
         (
         int Id,
-        string Name,
+        string? Name,
         decimal Price,
         string? Description,
         string? ImageUrl,

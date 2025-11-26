@@ -38,22 +38,42 @@ namespace RestaurantMenuAPI.Services.Implementations
                 State = State.Active
             };
             int newRestId = _restaurantRepository.Create(newRest);
-            RestaurantDto createdRest = GetById(newRestId);
+            RestaurantDto? createdRest = GetById(newRestId);
+            if (createdRest != null)
+            {
+                return new RestaurantDto
+                (
+                    createdRest.Id,
+                    createdRest.Email,
+                    createdRest.Name,
+                    createdRest.Description,
+                    createdRest.ImageUrl,
+                    createdRest.Number,
+                    createdRest.Address,
+                    createdRest.Views,
+                    createdRest.OpeningTime,
+                    createdRest.ClosingTime,
+                    createdRest.OpeningDays,
+                    IsOpen(createdRest.OpeningTime, createdRest.ClosingTime, createdRest.OpeningDays),
+                    createdRest.State
+                );
+            }
+
             return new RestaurantDto
             (
-                createdRest.Id,
-                createdRest.Email,
-                createdRest.Name,
-                createdRest.Description,
-                createdRest.ImageUrl,
-                createdRest.Number,
-                createdRest.Address,
-                createdRest.Views,
-                createdRest.OpeningTime,
-                createdRest.ClosingTime,
-                createdRest.OpeningDays,
-                IsOpen(createdRest.OpeningTime, createdRest.ClosingTime, createdRest.OpeningDays),
-                createdRest.State
+                newRestId,
+                newRest.Email,
+                newRest.Name,
+                newRest.Description,
+                newRest.ImageUrl,
+                newRest.Number,
+                newRest.Address,
+                0,
+                newRest.OpeningTime,
+                newRest.ClosingTime,
+                newRest.OpeningDays,
+                IsOpen(newRest.OpeningTime, newRest.ClosingTime, newRest.OpeningDays),
+                newRest.State
             );
         }
 

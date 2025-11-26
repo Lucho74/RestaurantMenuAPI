@@ -29,7 +29,7 @@ namespace RestaurantMenuAPI.Models.Entities
         public string OpeningDays { get; set; }
         public ICollection<Category>? Categories { get; set; } = new List<Category>();
         public ICollection<Product>? Products { get; set; } = new List<Product>();
-        public HappyHour? happyHour { get; set; }
+        public HappyHour? HappyHour { get; set; }
         public State State { get; set; } 
 
 

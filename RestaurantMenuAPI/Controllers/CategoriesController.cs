@@ -36,27 +36,27 @@ namespace RestaurantMenuAPI.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<ProductDto> GetAllByRestaurant(int restId)
+        public ActionResult<CategoryDto> GetAllByRestaurant(int restId)
         {
             return Ok(_categoryService.GetAllByRestaurant(restId));
         }
 
         [HttpGet("product/{productId}")]
         [AllowAnonymous]
-        public ActionResult<ProductDto> GetAllByProduct(int productId)
+        public ActionResult<CategoryDto> GetAllByProduct(int productId)
         {
             return Ok(_categoryService.GetAllByProduct(productId));
         }
 
-        [HttpGet("{categoryid}")]
+        [HttpGet("{categoryId}")]
         [AllowAnonymous]
-        public IActionResult GetOneById(int id)
+        public IActionResult GetOneById(int categoryId)
         {
-            if (id == 0)
+            if (categoryId == 0)
             {
                 return BadRequest("El ID ingresado debe ser distinto de 0");
             }
-            CategoryWithProductsDto? category = _categoryService.GetById(id);
+            CategoryWithProductsDto? category = _categoryService.GetById(categoryId);
             if (category == null)
             {
                 return NotFound();
@@ -73,11 +73,11 @@ namespace RestaurantMenuAPI.Controllers
         }
 
         [HttpDelete("{categoryId}")]
-        public IActionResult DeleteCategory(int id)
+        public IActionResult DeleteCategory(int categoryId)
         {
             try
             {
-                _categoryService.Remove(id);
+                _categoryService.Remove(categoryId);
             }
             catch (Exception ex)
             {

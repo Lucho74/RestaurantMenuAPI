@@ -50,6 +50,16 @@ namespace RestaurantMenuAPI.Repositories.Implementations
 
         }
 
+        public void DeleteCategoryFromProduct(int productId, int categoryId)
+        {
+            _context.ProductCategories.Remove(new ProductCategory
+            {
+                ProductId = productId,
+                CategoryId = categoryId
+            });
+            _context.SaveChanges();
+        }
+
         public List<Product> GetAllByCategory(int categoryId)
         {
             return _context.ProductCategories.Where(pc => pc.CategoryId == categoryId)

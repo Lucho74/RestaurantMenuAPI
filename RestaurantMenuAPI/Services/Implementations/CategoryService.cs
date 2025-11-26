@@ -23,13 +23,12 @@ namespace RestaurantMenuAPI.Services.Implementations
                 RestaurantId = restId
             };
             int newCategoryId = _categoryRepository.Create(newCategory);
-            CategoryWithProductsDto createdCategory = GetById(newCategoryId);
             return new CategoryDto
             (
-                createdCategory.Id,
-                createdCategory.Name,
-                createdCategory.Description,
-                createdCategory.RestaurantId
+                newCategoryId,
+                newCategory.Name,
+                newCategory.Description,
+                newCategory.RestaurantId
             );
         }
 

@@ -56,7 +56,7 @@ builder.Services.AddAuthentication("Bearer")
    });
 
 
-builder.Services.AddDbContext < RestaurantMenuContext > (
+builder.Services.AddDbContext<RestaurantMenuContext>(
     dbContextOptions => dbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:RestaurantMenuDBConnectionString"]
     ));
 
@@ -73,13 +73,13 @@ builder.Services.AddScoped<IHappyHourService, HappyHourService>();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngularApp",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:4200")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
 });
 
 builder.Services.AddControllers();
@@ -93,9 +93,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowAngularApp");
-
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAll");
 
 app.UseAuthentication();
 

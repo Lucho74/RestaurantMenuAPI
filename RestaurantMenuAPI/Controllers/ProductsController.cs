@@ -49,13 +49,13 @@ namespace RestaurantMenuAPI.Controllers
 
         [HttpGet("{productId}")]
         [AllowAnonymous]
-        public IActionResult GetOneById(int productId, int restId)
+        public IActionResult GetOneById(int productId)
         {
             if (productId == 0)
             {
                 return BadRequest("El ID ingresado debe ser distinto de 0");
             }
-            ProductWithCategoriesDto? product = _productService.GetById(productId, restId);
+            ProductWithCategoriesDto? product = _productService.GetById(productId);
             if (product == null)
             {
                 return NotFound();
@@ -92,12 +92,18 @@ namespace RestaurantMenuAPI.Controllers
             return NoContent();
 
         }
+        [HttpDelete("{productId}/category/{categoryId}")]
+        public IActionResult DeleteCategoryFromProduct(int productId, int categoryId)
+        {
+            _productService.DeleteCategoryFromProduct(productId, categoryId);
+            return NoContent();
+        }
 
-        [HttpPut("{productId}/discount")]
+
+            [HttpPut("{productId}/discount")]
         public IActionResult ApplyDiscount(ProductDiscountDto dto, int productId)
         {
-            int restId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("id"))!.Value);
-            _productService.ApplyDiscount(dto, productId, restId);
+            _productService.ApplyDiscount(dto, productId);
             return NoContent();
         }
 

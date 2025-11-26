@@ -3,8 +3,8 @@
     public record UpdateRestaurantDto
         (
         string Name,
-        string? ImageUrl,
         string? Description,
+        string? ImageUrl,
         string? Number,
         string? Address,
         TimeSpan OpeningTime,

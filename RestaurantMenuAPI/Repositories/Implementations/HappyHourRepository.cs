@@ -29,6 +29,7 @@ namespace RestaurantMenuAPI.Repositories.Implementations
                 throw new Exception("La HappyHour no configurada o no existe.");
             }
             happyHour.DiscountPercentage = editHappyHourConfig.DiscountPercentage;
+            happyHour.IsActive = editHappyHourConfig.IsActive;
             happyHour.StartTime = editHappyHourConfig.StartTime;
             happyHour.EndTime = editHappyHourConfig.EndTime;
             int modifiedCount = _context.SaveChanges();
@@ -36,6 +37,11 @@ namespace RestaurantMenuAPI.Repositories.Implementations
             {
                 throw new Exception("No se pudo actualizar la configuración. No se detectó ningún cambio.");
             }
+        }
+
+        public List<HappyHour> GetAll()
+        {
+            return _context.HappyHours.Where(hh => hh.IsActive == true).ToList();
         }
 
         public HappyHour? GetByRestaurantId(int restId)

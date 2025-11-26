@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantMenuAPI.Models.DTOs;
+using RestaurantMenuAPI.Services.Implementations;
 using RestaurantMenuAPI.Services.Interfaces;
 
 namespace RestaurantMenuAPI.Controllers
@@ -32,7 +33,15 @@ namespace RestaurantMenuAPI.Controllers
             return Created("Creado con exito", createdHappyHour);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult<HappyHourDto> GetAll()
+        {
+            return Ok(_happyHourService.GetAll());
+        }
+
         [HttpGet("{restId}")]
+        [AllowAnonymous]
         public IActionResult GetByRestaurantId(int restId)
         {
             if (restId == 0)
@@ -48,7 +57,7 @@ namespace RestaurantMenuAPI.Controllers
         }
 
         [HttpPut("{restId}")]
-        public IActionResult EditConfig(ConfigHappyHourDto dto)
+        public IActionResult EditConfig(HappyHourDto dto)
         {
             int restId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("id"))!.Value);
             _happyHourService.EditConfig(dto, restId);

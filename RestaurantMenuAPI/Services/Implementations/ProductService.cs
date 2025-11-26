@@ -21,9 +21,13 @@ namespace RestaurantMenuAPI.Services.Implementations
             _productRepository.AddCategoryToProduct(productId, categoryId);
         }
 
-        public void ApplyDiscount(ProductDiscountDto productDiscount, int productId, int restId)
+        public void ApplyDiscount(ProductDiscountDto productDiscount, int productId)
         {
-            ProductWithCategoriesDto product = GetById(productId, restId);
+            Product? existing = _productRepository.GetById(productId);
+            if (existing == null)
+            {
+                throw new Exception("El producto no existe");
+            }
             Product productWithDiscount = new Product()
             {
                 HasDiscount = productDiscount.HasDiscount,
@@ -47,24 +51,50 @@ namespace RestaurantMenuAPI.Services.Implementations
                 RestaurantId = restId,
             };
             int newProductId = _productRepository.Create(newProduct);
-            ProductWithCategoriesDto createdProduct = GetById(newProductId, restId);
+            ProductWithCategoriesDto? createdProduct = GetById(newProductId);
+            if (createdProduct != null)
+            {
+                return new ProductDto
+                (
+                    createdProduct.Id,
+                    createdProduct.Name,
+                    createdProduct.Price,
+                    createdProduct.Description,
+                    createdProduct.ImageUrl,
+                    createdProduct.IsFeatured,
+                    createdProduct.HasDiscount,
+                    createdProduct.DiscountPercentage,
+                    createdProduct.DiscountPrice,
+                    createdProduct.DiscountStart,
+                    createdProduct.DiscountEnd,
+                    createdProduct.HasHappyHour,
+                    createdProduct.HappyHourPrice,
+                    createdProduct.RestaurantId
+                );
+            }
             return new ProductDto
             (
-                createdProduct.Id,
-                createdProduct.Name,
-                createdProduct.Price,
-                createdProduct.Description,
-                createdProduct.ImageUrl,
-                createdProduct.IsFeatured,
-                createdProduct.HasDiscount,
-                createdProduct.DiscountPercentage,
-                createdProduct.DiscountPrice,
-                createdProduct.DiscountStart,
-                createdProduct.DiscountEnd,
-                createdProduct.HasHappyHour,
-                createdProduct.HappyHourPrice,
-                createdProduct.RestaurantId
+                newProductId,
+                newProduct.Name,
+                newProduct.Price,
+                newProduct.Description,
+                newProduct.ImageUrl,
+                newProduct.IsFeatured,
+                newProduct.HasDiscount,
+                newProduct.DiscountPercentage,
+                GetDiscountPrice(newProduct),
+                newProduct.DiscountStart,
+                newProduct.DiscountEnd,
+                newProduct.HasHappyHour,
+                _happyHourService.GetHappyHourPrice(newProduct, restId),
+                newProduct.RestaurantId
             );
+        }
+
+
+        public void DeleteCategoryFromProduct(int productId, int categoryId)
+        {
+            _productRepository.DeleteCategoryFromProduct(productId, categoryId);
         }
 
         public bool DiscountExistence(Product product)
@@ -80,7 +110,7 @@ namespace RestaurantMenuAPI.Services.Implementations
                         null,
                         null,
                         null
-                    ), product.Id, product.RestaurantId);
+                    ), product.Id);
                     return false;
                 }
                 return true;
@@ -130,7 +160,7 @@ namespace RestaurantMenuAPI.Services.Implementations
             ));
         }
 
-        public ProductWithCategoriesDto? GetById(int productId, int restId)
+        public ProductWithCategoriesDto? GetById(int productId)
         {
             Product? product = _productRepository.GetById(productId);
             if (product == null)
@@ -151,7 +181,7 @@ namespace RestaurantMenuAPI.Services.Implementations
                 product.DiscountStart,
                 product.DiscountEnd,
                 product.HasHappyHour,
-                _happyHourService.GetHappyHourPrice(product, restId),
+                _happyHourService.GetHappyHourPrice(product, product.RestaurantId),
                 product.RestaurantId,
                 product.ProductCategories.Select(pc => pc.Category.Id).ToList()
             );

@@ -22,7 +22,7 @@ namespace RestaurantMenuAPI.Models.Entities
         public bool HasHappyHour { get; set; } = false;
         public int RestaurantId { get; set; }
 
-        public ICollection<ProductCategory> ProductCategories = new List<ProductCategory>();
+        public ICollection<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
 
         [ForeignKey("RestaurantId")]
         public Restaurant Restaurant { get; set; }
